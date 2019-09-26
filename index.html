@@ -13,8 +13,12 @@
        <input type="submit">
     </form>
     <img src="logo.jpg" id="logo" style="border-radius: 10px 20px 30px 40px;"/>
-    <h1>我叫<span id="name"></span></h1>
-    <p>我的学号是<span id="stunum"></span></p>
+    <div>
+            <h1>我叫<span id="name"></span></h1>
+            <p>我的学号是<span id="stunum"></span></p>
+            <button>next</button>
+    </div>
+    
     <img src="matrix.png" >
 
     <script>
@@ -24,10 +28,19 @@
                 $("#stunum").text(data.stunum);
             })
         });
-
-
-
+        $('button').click(function(){
+            $(function(){
+            $.get("./data1.json",function(data){
+                $("#name").text(data.name);
+                $("#stunum").text(data.stunum);
+            })
+        });
+        })
         
+
+
+
+
     </script>
 </body>
 </html>
