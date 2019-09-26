@@ -5,13 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-
+<script src="jquery-3.4.1.js"></script>
 </head>
 <body>
-    <input type="date">
+    <form >
+       <input type="text" name="qwq">
+       <input type="submit">
+    </form>
     <img src="logo.jpg" id="logo" style="border-radius: 10px 20px 30px 40px;"/>
-    <h1>我叫吴港钧</h1>
-    <p>我的学号是18002040132</p>
+    <h1>我叫<span id="name"></span></h1>
+    <p>我的学号是<span id="stunum">:</span></p>
     <img src="matrix.png" >
+
+    <script>
+        $(function(){
+            $.get("./data.json",function(data){
+                $("#name").text(data.name);
+                $("#stunum").text(dada.stunum);
+            })
+        });
+    </script>
 </body>
 </html>
