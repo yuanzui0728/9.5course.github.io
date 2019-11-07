@@ -9,34 +9,54 @@
 </head>
 <body>
     <form>
-       <input type="text" name="qwq">
-       <input type="submit">
+       <input id="name1" type="text" name="name1">
+       <button type="button" id="submit" name="submit">修改名字</button>
     </form>
     <img src="logo.jpg" id="logo" style="border-radius: 10px 20px 30px 40px;"/>
     <div>
             <h1>我叫<span id="name"></span></h1>
             <p>我的学号是<span id="stunum"></span></p>
-            <button>next</button>
+            <button id="next">next</button>
     </div>
     
     <img src="matrix.png" >
 
     <script>
-        $(function(){
-            $.get("./data.json",function(data){
-                $("#name").text(data.name);
-                $("#stunum").text(data.stunum);
-            })
+        
+        var callback = function(data){
+                $("#name").text(data.myname);
+                $("#stunum").text(data.mynumber);
+            }
+        // $(function(){
+        //     $.get("./data.json",function(data){
+        //         $("#name").text(data.myname);
+        //         $("#stunum").text(data.mynumber);
+        //     })
+        // });
+
+        $.ajax({
+            type: "POST",
+            url: "http://127.0.0.1:8585/data.json",
+            data: "stunumber=18002040132",
+            
+            success: callback,
         });
-        $('button').click(function(){
+
+        $('#next').click(function(){
             $(function(){
-            $.get("./data1.json",function(data){
-                $("#name").text(data.name);
-                $("#stunum").text(data.stunum);
+            $.post("http://127.0.0.1:8585/data.json",{stunumber:"18002040132"},function(data){
+                $("#name").text(data.myname);
+                $("#stunum").text(data.mynumber);
             })
         });
         })
         
+        $(function(){
+            $("#submit").click(function(){
+                   $("#name").text($("#name1").val());
+            })
+        })
+
     </script>
 </body>
 </html>
