@@ -36,15 +36,14 @@
 
         $.ajax({
             type: "POST",
-            url: "http://127.0.0.1:8585/data.json",
+            url: "http://127.0.0.1:8080/data.json",
             data: "stunumber=18002040132",
-            
             success: callback,
         });
 
         $('#next').click(function(){
             $(function(){
-            $.post("http://127.0.0.1:8585/data.json",{stunumber:"18002040132"},function(data){
+            $.post("http://127.0.0.1:8080/data.json",{stunumber:"18002040132"},function(data){
                 $("#name").text(data.myname);
                 $("#stunum").text(data.mynumber);
             })
