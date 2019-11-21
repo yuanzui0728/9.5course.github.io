@@ -8,6 +8,7 @@
 <script src="jquery-3.4.1.js"></script>
 </head>
 <body>
+    <a id="loginBtn" href="login.html">去登陆</a>
     <form>
        <input id="name1" type="text" name="name1">
        <button type="button" id="submit" name="submit">修改名字</button>
@@ -18,11 +19,8 @@
             <p>我的学号是<span id="stunum"></span></p>
             <button id="next">next</button>
     </div>
-    
-    <img src="matrix.png" >
-
+    <!-- <img src="matrix.png" > -->
     <script>
-        
         var callback = function(data){
                 $("#name").text(data.myname);
                 $("#stunum").text(data.mynumber);
@@ -36,8 +34,11 @@
 
         $.ajax({
             type: "POST",
-            url: "http://127.0.0.1:8080/data.json",
-            data: "stunumber=18002040132",
+            xhrFields:{
+                        withCredentials:true
+            },
+            url: "http://127.0.0.1:8080/userinfo",
+            // data: "stunumber=18002040132",
             success: callback,
         });
 

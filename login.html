@@ -9,7 +9,7 @@
 </head>
 <body>
     <p>用户名: <input type="text" id="number"></p>
-    <p>用户名: <input type="text" id="password"></p>
+    <p>密码: <input type="text" id="password"></p>
     <button id="btn">登陆</button> 
     <script>
         $(function(){
@@ -18,23 +18,22 @@
                     number: $("#number").val(),
                     password: $("#password").val(),
                 };
-
-
                 $.ajax({
                     type:"POST",
+                    xhrFields:{
+                        withCredentials:true
+                    },
                     url: "http://127.0.0.1:8080/login",
                     contentType:"application/json",
                     data: JSON.stringify(data),
                     success: function(result){
                         if(result.result == "success"){
+                            // $.cookie("number",data.number,"/");
                             location.href = "index.html";
                         }
                     },
                 })
             })
-        
-
-        
     })
     </script>
 </body>
