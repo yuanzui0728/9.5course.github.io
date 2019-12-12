@@ -18,6 +18,7 @@
             <h1>我叫<span id="name"></span></h1>
             <p>我的学号是<span id="stunum"></span></p>
             <button id="next">next</button>
+            <button id="addBtn">添加</button>
     </div>
     <!-- <img src="matrix.png" > -->
     <script>
@@ -56,6 +57,31 @@
                    $("#name").text($("#name1").val());
             })
         })
+
+        // $.post("http://127.0.0.1:8080/"),
+
+        $("#alogout").click(function(){
+            $.ajax({
+                type:"POST",
+                xhrFields:{
+                        withCredentials:true
+                },
+                url:"http://127.0.0.1:8080/logout",
+                success:function(){
+                    location.href="index.html"
+                }
+            })
+        })
+
+        $("#addBtn").click(function(){
+            $.post("http:127.0.0.1:8080/addlvli"),
+            {lvli:$("#content").val()},
+            function(){
+                location.href="index.html"
+            }
+        })
+
+
 
     </script>
 </body>
