@@ -1,86 +1,72 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-<script src="jquery-3.4.1.js"></script>
-</head>
+<html>
 <body>
-    <a id="loginBtn" href="login.html">去登陆</a>
-    <form>
-       <input id="name1" type="text" name="name1">
-       <button type="button" id="submit" name="submit">修改名字</button>
-    </form>
-    <img src="logo.jpg" id="logo" style="border-radius: 10px 20px 30px 40px;"/>
-    <div>
-            <h1>我叫<span id="name"></span></h1>
-            <p>我的学号是<span id="stunum"></span></p>
-            <button id="next">next</button>
-            <button id="addBtn">添加</button>
-    </div>
-    <!-- <img src="matrix.png" > -->
+<h1>我叫<span id="myname"></span></h1>
+
+    <p>我的学号是<span id="mynumber"></span>
+    </p>
+    <a id="alogin" href="login.html">去登录</a>
+    <a id="alogout" href="#">去注销</a>
+
+    <input id="content" type="text">
+    <button id=btnAdd>添加</button>
+
+<ul id="ul">
+</ul>
+    <script src="jquery-3.4.1.js"></script>
     <script>
-        var callback = function(data){
-                $("#name").text(data.myname);
-                $("#stunum").text(data.mynumber);
-            }
-        // $(function(){
-        //     $.get("./data.json",function(data){
-        //         $("#name").text(data.myname);
-        //         $("#stunum").text(data.mynumber);
-        //     })
-        // });
-
-        $.ajax({
-            type: "POST",
-            xhrFields:{
-                        withCredentials:true
-            },
-            url: "http://127.0.0.1:8080/userinfo",
-            // data: "stunumber=18002040132",
-            success: callback,
-        });
-
-        $('#next').click(function(){
-            $(function(){
-            $.post("http://127.0.0.1:8080/data.json",{stunumber:"18002040132"},function(data){
-                $("#name").text(data.myname);
-                $("#stunum").text(data.mynumber);
-            })
-        });
-        })
-        
         $(function(){
-            $("#submit").click(function(){
-                   $("#name").text($("#name1").val());
-            })
-        })
-
-        // $.post("http://127.0.0.1:8080/"),
-
-        $("#alogout").click(function(){
-            $.ajax({
-                type:"POST",
-                xhrFields:{
-                        withCredentials:true
-                },
-                url:"http://127.0.0.1:8080/logout",
-                success:function(){
-                    location.href="index.html"
+            var callback=function (result){
+                if(!result || !result.myname){
+                    $("#alogout").hide();
+                    $("#content").hide();
+                    $("#btnAdd").hide();
+                }else{
+                    $("#myname").text(result.myname);
+                    $("#mynumber").text(result.mynumber);
+                    $("#alogin").hide();
                 }
+             }
+             $.ajax({
+                type:"POST",
+                xhrFields: {
+                        withCredentials: true
+                },
+                url:"http://127.0.0.1:8585/userinfo",
+                contentType:"application/json",
+                success:callback
+             });
+     
+             $.post("http://127.0.0.1:8585/lvlilist",
+                        function(result){
+                            console.log(result)
+                            for(var i=0;i<result.length;i++){
+                                $("#ul").append("<li>"+ result[i].url+"</li>")
+                            }
             })
-        })
 
-        $("#addBtn").click(function(){
-            $.post("http:127.0.0.1:8080/addlvli"),
-            {lvli:$("#content").val()},
-            function(){
-                location.href="index.html"
-            }
-        })
+            $("#alogout").click(function(){
+                $.ajax({
+                type:"POST",
+                xhrFields: {
+                        withCredentials: true
+                },
+                url:"http://127.0.0.1:8585/logout",
+                success:function(){
+                    location.href="index.html";
+                }
+             });
+            });
 
+   
+            $("#btnAdd").click(function(){
+                $.post("http://127.0.0.1:8585/addlvli",
+                        {lvli:$("#content").val()},
+                        function(){
+                            location.href="index.html"; 
+                        })
+            })
+
+        })
 
 
     </script>
